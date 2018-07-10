@@ -36,6 +36,8 @@ long eval_op(long x, char* op, long y) {
   if (strcmp(op, "/") == 0) { return x / y; }
   if (strcmp(op, "%") == 0) { return x % y; }
   if (strcmp(op, "^") == 0) { return (int) pow((double) x,y); }
+  if (strcmp(op, "m") == 0) { return ( (x <= y) ? x : y ); }
+  if (strcmp(op, "M") == 0) { return ( (x >= y) ? x : y ); }
   return 0;
 }
 
@@ -73,11 +75,11 @@ int main(int argc, char** argv) {
 
   /* Define them with the following Language */
   mpca_lang(MPCA_LANG_DEFAULT,
-  "                                                     \
-    number   : /-?[0-9]+/ ;                             \
-    operator : '+' | '-' | '*' | '/' | '%' | '^' ;      \
-    expr     : <number> | '(' <operator> <expr>+ ')' ;  \
-    lispy    : /^/ <operator> <expr>+ /$/ ;             \
+  "                                                                     \
+    number   : /-?[0-9]+/ ;                                             \
+    operator : '+' | '-' | '*' | '/' | '%' | '^' | 'm' | 'M' ;          \
+    expr     : <number> | '(' <operator> <expr>+ ')' ;                  \
+    lispy    : /^/ <operator> <expr>+ /$/ ;                             \
   ",
   Number, Operator, Expr, Lispy);
 
